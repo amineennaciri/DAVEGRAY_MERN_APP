@@ -3,11 +3,14 @@ const path = require('path');
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 const corsOption = require('./config/corsOptions');
+const { logger } = require('./middleware/logEvents');
 const app = express();
 
 const PORT = process.env.PORT || 3500;
 
 // middlewares
+// custom middleware logger
+app.use(logger);
 // CORS
 app.use(cors(corsOption));
 // this middleware handle urlencoded form data
@@ -18,6 +21,8 @@ app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
 // routes
 app.use('/', require('./routes/root'));
+app.use('/register', require('./routes/register'));
+app.use('/auth', require('./routes/auth'));
 app.use('/employees', require('./routes/api/employees'));
 
 // routes for 404 responses
