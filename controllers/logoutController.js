@@ -14,18 +14,18 @@ const handleLogout = async (req,res) => {
     // is refresh token in DB?
     const foundUser = usersDB.users.find(person => person.refreshToken === refreshToken);
     if(!foundUser){
-        res.clearCookie('jwt', {httpOnly: true, maxAge:24*60*60*1000});/*erase the cookie that was sent*/
+        res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true});/*erase the cookie that was sent*/
         return res.sendStatus(204); //success but no content
     } 
     // Delete the refreshToken in DB
     const otherUsers = usersDB.users.filter(person => person.refreshToken !== foundUser.refreshToken);
     const currentUser = {...foundUser, refreshToken:''};
-    usersDB.users([...otherUsers, currentUser]);
+    usersDB.setUsers([...otherUsers, currentUser]);
     await fsPromises.writeFile(
         path.join(__dirname, '..', 'model', 'users.json'),
         JSON.stringify(usersDB.users)
     )
-    res.clearCookie('jwt', {httpOnly: true, maxAge:24*60*60*1000}); /* secure: true - only serves on https | this needs to be added in prod not in dev */
+    res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true});
     res.sendStatus(204);
 }
 

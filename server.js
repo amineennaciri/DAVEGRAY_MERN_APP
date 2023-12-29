@@ -6,6 +6,7 @@ const corsOption = require('./config/corsOptions');
 const { logger } = require('./middleware/logEvents');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
+const credentials = require('./middleware/credentials');
 const app = express();
 
 const PORT = process.env.PORT || 3500;
@@ -13,6 +14,9 @@ const PORT = process.env.PORT || 3500;
 // middlewares
 // custom middleware logger
 app.use(logger);
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
 // CORS
 app.use(cors(corsOption));
 // this middleware handle urlencoded form data
