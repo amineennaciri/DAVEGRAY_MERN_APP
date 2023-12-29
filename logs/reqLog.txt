@@ -91,3 +91,5 @@
 20231229	13:28:31	e78b7b52-498c-42de-b84e-b62a7dc11c2c	GET	undefined	/refresh
 20231229	13:29:10	8154219e-9d03-4b0f-bef3-6338cb0a0c79	POST	undefined	/auth
 20231229	13:29:25	f3d64e7d-1ad4-42cd-8e37-4271849ca96a	GET	undefined	/logout
+20231229	16:41:38	7b5cc919-c849-4631-9fc0-dac3b68b4777	POST	undefined	/auth
+20231229	16:41:59	5681b31f-c15a-4096-9006-3189d8afacfe	GET	undefined	/api/

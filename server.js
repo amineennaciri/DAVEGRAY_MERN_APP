@@ -42,7 +42,7 @@ app.use('/logout', require('./routes/logout'));
 // any route after the verifyJWT middleware will have to get verified with JWT
 app.use(verifyJWT);
 app.use('/employees', require('./routes/api/employees'));
-
+app.use('/users', require('./routes/api/users'));
 // routes for 404 responses
 app.all('*', (req,res)=>{
     res.status(404);
