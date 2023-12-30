@@ -10,7 +10,7 @@ const handleLogin = async (req,res) => {
     //evaluate password
     const match = await bcrypt.compare(pwd, foundUser.password);
     if (match){
-        const roles = Object.values(foundUser.roles);
+        const roles = Object.values(foundUser.roles).filter(Boolean);
         // create JWTs
         const accessToken = jwt.sign(
             {   "UserInfo": {
@@ -33,7 +33,7 @@ const handleLogin = async (req,res) => {
         res.cookie('jwt', refreshToken, {httpOnly: true, sameSite:'none', secure: true, maxAge:24*60*60*1000});
         /* we will send access token in a cookie available in http only (not vulnerable to javascript)
         cookie is always sent with every request. here the refreshToken will stay for 24 hours */
-        res.json({accessToken});//to be stored in memory by the front end
+        res.json({roles, accessToken});//to be stored in memory by the front end
     }else {
         res.sendStatus(401);
     }
